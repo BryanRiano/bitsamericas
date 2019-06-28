@@ -1,11 +1,17 @@
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { HttpHeaders, HttpClient, HttpParams } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AppService {
 
-  constructor() { }
+  endPointService: string;
+  constructor(private _http: HttpClient) {
+    this.endPointService = environment.apiUrl;
+  }
 
   Get(methodService: string, methodParams: Array<any>): Observable<any> {
     let EndPointRequest = this.endPointService + methodService + '?';
@@ -13,7 +19,8 @@ export class AppService {
       EndPointRequest += tuple + '=' + methodParams[tuple] + '&';
     }
     let tokenStorage = 'Bearer ';
-    tokenStorage += (environment.clientStorageType === 'SESSION') ? sessionStorage.getItem('applicationCurrentUser') : localStorage.getItem('applicationCurrentUser');
+    tokenStorage += ('SESSION') ?
+    sessionStorage.getItem('applicationCurrentUser') : localStorage.getItem('applicationCurrentUser');
     const headers =  new HttpHeaders().set('Authorization', tokenStorage); 
     return this._http.get(EndPointRequest.slice(0, -1), { headers });
   }
@@ -21,7 +28,7 @@ export class AppService {
   Post(methodService: string, methodParams: object): Observable<any> {
     let tokenStorage = 'Bearer ';
     const EndPointRequest = `${this.endPointService}${methodService}`;
-     tokenStorage += (environment.clientStorageType === 'SESSION') ?
+     tokenStorage += ('SESSION') ?
       sessionStorage.getItem('applicationCurrentUser') :
       localStorage.getItem('applicationCurrentUser');
     const headers = 
@@ -43,7 +50,8 @@ export class AppService {
       EndPointRequest += tuple + '=' + methodParams[tuple] + '&';
     }
     let tokenStorage = 'Bearer ';
-    tokenStorage += (environment.clientStorageType === 'SESSION') ? sessionStorage.getItem('applicationCurrentUser') : localStorage.getItem('applicationCurrentUser');
+    tokenStorage += ('SESSION') ?
+    sessionStorage.getItem('applicationCurrentUser') : localStorage.getItem('applicationCurrentUser');
     const headers =  new HttpHeaders().set('Authorization', tokenStorage); 
     return this._http.delete(EndPointRequest.slice(0, -1), { headers });
   }

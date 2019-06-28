@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Login } from './login';
+import { LoginService } from './login.service';
 
 @Component({
   selector: 'app-login',
@@ -10,14 +11,16 @@ export class LoginComponent implements OnInit {
 
   mainObject: Login;
 
-  constructor() { }
+  constructor(private loginService: LoginService) { }
 
   ngOnInit() {
     this.mainObject = new Login();
   }
 
-  onSubmit(mainObject) {
-    
+  onSubmit(mainObject: Login) {
+    this.loginService.login(mainObject).subscribe(operationResult => {
+
+    });
   }
 
 }
