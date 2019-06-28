@@ -1,0 +1,16 @@
+<div class="container">
+  <div class="row form">
+    <div class="col-sm-4 offset-sm-4 ">
+      <form #form="ngForm" class="form" (ngSubmit)="onSubmit(mainObject)">
+        <div class="form-group">
+          <input type="text" name="username" class="form-control" aria-describedby="emailHelp" placeholder="Username" [(ngModel)]="mainObject.username" required>
+        </div>
+        <div class="form-group">
+          <input type="password" name="password" [(ngModel)]="mainObject.password" class="form-control" placeholder="Password" required>
+        </div>
+        <button type="submit" class="btn btn-success" [disabled]="!form.valid">Login</button>
+        <button type="button" class="btn btn-danger ml-2">Cancel</button>
+      </form>
+    </div>
+  </div>
+</div>
